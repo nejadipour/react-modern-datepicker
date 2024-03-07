@@ -1,7 +1,9 @@
 # react-modern-datepicker
 
 A simple and reusable Datepicker component for React.\
-This package is an updated version of [react-modern-calendar-datepicker](https://www.npmjs.com/package/react-modern-calendar-datepicker) with some additional features and bug fixes.
+This package is an updated version
+of [react-modern-calendar-datepicker](https://www.npmjs.com/package/react-modern-calendar-datepicker) with some
+additional features and bug fixes.
 
 ## Installation
 
@@ -15,6 +17,7 @@ npm install @nejadipour/react-modern-calendar-datepicker
 ```
 
 ## Documentation
+
 You can find the base documentation [here](https://kiarash-z.github.io/react-modern-calendar-datepicker/).
 Some additional features are added to the original package, you can find the properties details in the table below:
 
@@ -30,8 +33,8 @@ Some additional features are added to the original package, you can find the pro
 | closedView                    | String   | 'text'                                  | The view that is shown when the date picker is closed. It can be one of 'text', 'button' and 'input'. ```alwaysOpen``` should be False                                                                                   |
 | closedViewClassName           | String   | ''                                      | Additional CSS class for the closed view element                                                                                                                                                                         |
 | closedViewProps               | Object   | {}                                      | Additional props for the closed view element based on Ant Design components.                                                                                                                                             |
-| colorPrimary                  | String   | '#0eca2d'                               | The color of selected day in the single date picker and the color of range start and range end in range date picker                                                                                                      |
-| colorPrimaryLight             | String   | '#cff4d5'                               | The color of range-between days                                                                                                                                                                                          |
+| colorPrimary                  | String   | '#1677ff'                               | The color of selected day in the single date picker and the color of range start and range end in range date picker                                                                                                      |
+| colorPrimaryLight             | String   | '#64a9f9'                               | The color of range-between days                                                                                                                                                                                          |
 | customDaysClassName           | Array    | []                                      | An array of custom class names for your days. Each item is an object which contains day(number), month(number), year(number), and className(string) properties                                                           |
 | delimiter                     | String   | '-'                                     | The delimiter that separates year, month, and day in the date string. This is shown when the datepicker is closed                                                                                                        |
 | disabled                      | Boolean  | False                                   | If True, the date picker will be disabled                                                                                                                                                                                |
