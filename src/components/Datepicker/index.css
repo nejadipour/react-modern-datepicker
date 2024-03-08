@@ -144,3 +144,14 @@
 .calendar-dark .default-day-button {
     background-image: url("assets/icons/white_default.svg");
 }
+
+.calendar-icon {
+    height: 1.2em;
+    width: 1.2em;
+    margin-top: 2px;
+    background-image: url("assets/icons/calendar.svg");
+}
+
+.calendar-dark .calendar-icon {
+    background-image: url("assets/icons/white_calendar.svg");
+}

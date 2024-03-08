@@ -2,14 +2,15 @@ import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import "./index.css";
 import React, {useState} from 'react';
 import {Calendar} from "@hassanmojab/react-modern-calendar-datepicker";
-import {Button, ConfigProvider, Flex, Input, Popover, theme, Tooltip, Typography} from "antd";
+import {Button, ConfigProvider, Flex, Popover, theme, Typography} from "antd";
 import {
     getPlaceholder,
     getInitialValue,
-    notSelectedCheck,
     selectedValueToString,
     getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode
 } from "./utils.js";
+import {DefaultValueButton, EraseButton, SubmitButton, TodayButton} from "./options.jsx";
+import DatepickerInput from "./Input.jsx";
 
 
 export default function Datepicker(
@@ -17,7 +18,7 @@ export default function Datepicker(
         alwaysOpen = false,
         closedView = "text",
         closedViewClassName = "",
-        closedViewProps = {},
+        closedViewProps,
         colorPrimary = "#1677ff",
         colorPrimaryLight = "#1677FF4C",
         darkMode = false,
@@ -52,22 +53,6 @@ export default function Datepicker(
         props.onChange(returnValue)
     }
 
-    const getClosedViewElement = () => {
-        let placeholderText = getPlaceholder(value, locale, placeholder, delimiter)
-        let textClosedView = <Typography.Link className={closedViewClassName}>{placeholderText}</Typography.Link>
-
-        switch (closedView) {
-            case "text":
-                return textClosedView
-            case "input":
-                return <Input className={closedView} placeholder={placeholderText}></Input>
-            case "button":
-                return <Button className={closedView}>{placeholderText}</Button>
-            default:
-                return textClosedView
-        }
-    }
-
     const getCalendar = () => (
         <div key={key} className={darkMode ? "calendar-dark" : ""}>
             <Calendar
@@ -78,58 +63,113 @@ export default function Datepicker(
                 {...props}
                 onChange={onChange}
                 renderFooter={() => (
-                    <Flex justify={"space-between"} gap={10} className={"options-wrapper"} wrap={"wrap"}>
-                        <Flex gap={0} wrap={"wrap"}>
-                            <Tooltip
-                                overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
-                                title={locale === "en" ? "Today" : "امروز"}
-                            >
-                                <Button
-                                    shape={"circle"} className={"options-button"} type={"text"}
+                    <>
+                        <Flex justify={"space-between"} gap={10} className={"options-wrapper"} wrap={"wrap"}>
+                            <Flex gap={0} wrap={"wrap"}>
+                                <TodayButton
+                                    title={locale === "en" ? "Today" : "امروز"}
                                     onClick={() => {
                                         onChange(getTodayBasedOnSelectionMode(locale, selectionMode))
                                         setKey(key + 1)
                                     }}
-                                >
-                                    <span className={"icon-button today-button"}/>
-                                </Button>
-                            </Tooltip>
+                                />
 
-                            {defaultValue &&
-                                <Tooltip
-                                    overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
-                                    title={locale === "en" ? "Default" : "تاریخ پیشفرض"}
-                                >
-                                    <Button
-                                        shape={"circle"} className={"options-button"} type={"text"}
-                                        onClick={() => onChange(getInitialValue(selectionMode, defaultValue, delimiter))}
-                                    >
-                                        <span className={"icon-button default-day-button"}/>
-                                    </Button>
-                                </Tooltip>
-                            }
+                                {defaultValue &&
+                                    <DefaultValueButton
+                                        title={locale === "en" ? "Default" : "تاریخ پیشفرض"}
+                                        onClick={() => {
+                                            onChange(getInitialValue(selectionMode, defaultValue, delimiter))
+                                            setKey(key + 1)
+                                        }}
+                                    />
+                                }
+                            </Flex>
+
+                            <Flex gap={10} wrap={"wrap"}>
+                                <EraseButton
+                                    title={locale === "en" ? "Erase" : "پاک کردن"}
+                                    onClick={() => {
+                                        onChange(getEmptyValueBasedOnSelectionMode(selectionMode))
+                                        setKey(key + 1)
+                                    }}
+                                />
+
+                                <SubmitButton
+                                    title={locale === "en" ? "Submit" : "تایید"}
+                                    onClick={() => setOpen(false)}
+                                />
+                            </Flex>
                         </Flex>
 
-                        <Flex gap={10} wrap={"wrap"}>
-                            <Button
-                                className={"options-button"}
-                                onClick={() => onChange(getEmptyValueBasedOnSelectionMode(selectionMode))}
-                            >
-                                {locale === "en" ? "Erase" : "پاک کردن"}
-                            </Button>
-
-                            <Button
-                                type={"primary"} className={"options-button"}
-                                onClick={() => setOpen(false)}
-                            >
-                                {locale === "en" ? "Submit" : "تایید"}
-                            </Button>
-                        </Flex>
-                    </Flex>
+                        {props.renderFooter && props.renderFooter()}
+                    </>
                 )}
             />
         </div>
     )
+
+    const getPopover = (children) => (
+        <Popover
+            open={open}
+            trigger={trigger}
+            placement={placement}
+            content={getCalendar()}
+            overlayInnerStyle={{padding: 0}}
+            onOpenChange={(visible) => setOpen(visible)}
+            destroyTooltipOnHide
+        >
+            {children}
+        </Popover>
+    )
+
+    const getClosedViewElement = () => {
+        let placeholderText = getPlaceholder(value, locale, placeholder, delimiter)
+        let textClosedView =
+            <Typography.Link
+                className={closedViewClassName}
+                {...closedViewProps}
+            >
+                {placeholderText}
+            </Typography.Link>
+
+        switch (closedView) {
+            case "text":
+                return {
+                    element: textClosedView,
+                    insidePopover: true
+                }
+            case "input":
+                return {
+                    element: <DatepickerInput
+                        className={closedViewClassName}
+                        placeholder={placeholderText}
+                        delimiter={delimiter}
+                        selectionMode={selectionMode}
+                        locale={locale}
+                        onChange={onChange}
+                        setOpen={setOpen}
+                        getPopover={getPopover}
+                        {...closedViewProps}
+                    />,
+                    insidePopover: false
+                }
+            case "button":
+                return {
+                    element: <Button
+                        className={closedViewClassName}
+                        {...closedViewProps}
+                    >
+                        {placeholderText}
+                    </Button>,
+                    insidePopover: true
+                }
+            default:
+                return {
+                    element: textClosedView,
+                    insidePopover: true
+                }
+        }
+    }
 
     return (
         <ConfigProvider
@@ -141,25 +181,21 @@ export default function Datepicker(
                 }
             }}
         >
-            {
-                alwaysOpen ? (
-                    <>
-                        {getCalendar()}
-                    </>
-                ) : (
-                    <Popover
-                        open={open}
-                        trigger={trigger}
-                        placement={placement}
-                        content={getCalendar()}
-                        overlayInnerStyle={{padding: 0}}
-                        onOpenChange={(visible) => setOpen(visible)}
-                        destroyTooltipOnHide
-                    >
-                        {getClosedViewElement()}
-                    </Popover>
-                )
-            }
+            <div className={darkMode ? "calendar-dark" : ""}>
+                {
+                    alwaysOpen ? (
+                        <>
+                            {getCalendar()}
+                        </>
+                    ) : (
+                        getClosedViewElement().insidePopover ? (
+                            getPopover(getClosedViewElement().element)
+                        ) : (
+                            getClosedViewElement().element
+                        )
+                    )
+                }
+            </div>
         </ConfigProvider>
     )
 }

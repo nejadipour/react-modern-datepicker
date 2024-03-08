@@ -9,11 +9,11 @@ export default function App(datepickerProps) {
                 selectionMode={"single"}
                 colorPrimary={"purple"}
                 // alwaysOpen
-                // closedView={"input"}
-                // darkMode
-                // locale={"fa"}
+                closedView={"input"}
+                darkMode
+                locale={"fa"}
                 shouldHighlightWeekends
-                defaultValue={"2022-01-01"}
+                defaultValue={"1402-01-01"}
                 returnType={"string"}
                 onChange={(value) => console.log(value)}
             />

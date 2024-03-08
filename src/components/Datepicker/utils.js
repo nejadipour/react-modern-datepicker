@@ -1,5 +1,7 @@
 import {utils} from "@hassanmojab/react-modern-calendar-datepicker";
 
+export const EMPTY_PLACEHOLDERS = ["انتخاب", "select"]
+
 export const notSelectedCheck = (value) => {
     return value === null || (value.to === null || value.from === null) || Array.isArray(value) && value.length === 0
 }
@@ -128,5 +130,25 @@ export const getEmptyValueBasedOnSelectionMode = (selectionMode) => {
             return []
         default:
             return null
+    }
+}
+
+export const getInputPlaceHolder = (placeholder, locale, selectionMode, delimiter) => {
+    let enDateFormat = `YYYY${delimiter}MM${delimiter}DD`
+    let faDateFormat = `سال${delimiter}ماه${delimiter}روز`
+
+    if (!EMPTY_PLACEHOLDERS.includes(placeholder)) {
+        return placeholder;
+    }
+
+    switch (selectionMode) {
+        case "single":
+            return locale === "en" ? `select or type in ${enDateFormat} format` : `تاریخ را به فرمت ${faDateFormat} وارد کنید یا از تقویم انتخاب کنید`
+        case "range":
+            return locale === "en" ? "select from the calendar" : "از تقویم بازه زمانی را انتخاب کنید"
+        case "multiple":
+            return locale === "en" ? " from the calendar" : "از تقویم چندین تاریخ را انتخاب کنید"
+        default:
+            return locale === "en" ? `select or type in ${enDateFormat} format` : `تاریخ را به فرمت ${faDateFormat} وارد کنید یا از تقویم انتخاب کنید`
     }
 }
