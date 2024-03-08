@@ -1,7 +1,14 @@
+.Calendar__monthSelectorAnimationWrapper, .Calendar__yearSelectorAnimationWrapper {
+    bottom: 5%;
+}
+
 .calendar-dark .DatePicker__calendarArrow {
     border-color: #ffffff;
 }
 
+.calendar-dark .Calendar__weekDays {
+    margin-bottom: 0;
+}
 
 .calendar-dark .Calendar{
     --cl-color-black: #ffff;
@@ -104,4 +111,36 @@
 
 .calendar-dark .Calendar__monthArrow {
     background-image: url("assets/icons/white_arrow.svg");
+}
+
+.options-wrapper {
+    margin: 0 32px 40px;
+}
+
+.options-button {
+    padding-inline: 10px;
+}
+
+.icon-button {
+    height: 1.7em;
+    width: 1.7em;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin-top: 5px;
+}
+
+.today-button {
+    background-image: url("assets/icons/today.svg");
+}
+
+.default-day-button {
+    background-image: url("assets/icons/default.svg");
+}
+
+.calendar-dark .today-button {
+    background-image: url("assets/icons/white_today.svg");
+}
+
+.calendar-dark .default-day-button {
+    background-image: url("assets/icons/white_default.svg");
 }

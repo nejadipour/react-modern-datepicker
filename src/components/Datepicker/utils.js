@@ -1,3 +1,5 @@
+import {utils} from "@hassanmojab/react-modern-calendar-datepicker";
+
 export const notSelectedCheck = (value) => {
     return value === null || (value.to === null || value.from === null) || Array.isArray(value) && value.length === 0
 }
@@ -93,12 +95,38 @@ export const getPlaceholder = (value, locale, placeholder, delimiter) => {
     }
     if (Array.isArray(value)) {
         return `${value.length} ${locale === "en" ? "selected" : "تاریخ انتخاب شده"}`
-    }
-    else {
+    } else {
         let stringValue = selectedValueToString(value, delimiter)
         if (stringValue.from && stringValue.to) {
             return `${stringValue.from} ${locale === "en" ? "to" : "تا"} ${stringValue.to}`
         }
         return stringValue
+    }
+}
+
+export const getTodayBasedOnSelectionMode = (locale, selectionMode) => {
+    let today = utils(locale).getToday()
+    switch (selectionMode) {
+        case "single":
+            return today
+        case "range":
+            return {from: today, to: null}
+        case "multiple":
+            return [today]
+        default:
+            return today
+    }
+}
+
+export const getEmptyValueBasedOnSelectionMode = (selectionMode) => {
+    switch (selectionMode) {
+        case "single":
+            return null
+        case "range":
+            return {from: null, to: null}
+        case "multiple":
+            return []
+        default:
+            return null
     }
 }

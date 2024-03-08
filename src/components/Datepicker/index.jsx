@@ -1,9 +1,15 @@
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
+import "./index.css";
 import React, {useState} from 'react';
 import {Calendar} from "@hassanmojab/react-modern-calendar-datepicker";
-import {Button, ConfigProvider, Input, Popover, theme, Typography} from "antd";
-import "./index.css";
-import {getPlaceholder, getInitialValue, notSelectedCheck, selectedValueToString} from "./utils.js";
+import {Button, ConfigProvider, Flex, Input, Popover, theme, Tooltip, Typography} from "antd";
+import {
+    getPlaceholder,
+    getInitialValue,
+    notSelectedCheck,
+    selectedValueToString,
+    getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode
+} from "./utils.js";
 
 
 export default function Datepicker(
@@ -34,11 +40,13 @@ export default function Datepicker(
     }) {
     const {defaultAlgorithm, darkAlgorithm} = theme;
     const [value, setValue] = useState(getInitialValue(selectionMode, defaultValue, delimiter));
+    const [open, setOpen] = useState(false);
+    const [key, setKey] = useState(0);
 
     const onChange = (calendarValue) => {
         setValue(calendarValue);
         let returnValue = calendarValue
-        if (returnType === "string") {
+        if (calendarValue && returnType === "string") {
             returnValue = selectedValueToString(returnValue, delimiter)
         }
         props.onChange(returnValue)
@@ -46,9 +54,7 @@ export default function Datepicker(
 
     const getClosedViewElement = () => {
         let placeholderText = getPlaceholder(value, locale, placeholder, delimiter)
-        let textClosedView = notSelectedCheck(value) ?
-            <Typography.Link className={closedViewClassName}>{placeholderText}</Typography.Link> :
-            <Typography.Text className={closedViewClassName}>{placeholderText}</Typography.Text>
+        let textClosedView = <Typography.Link className={closedViewClassName}>{placeholderText}</Typography.Link>
 
         switch (closedView) {
             case "text":
@@ -63,7 +69,7 @@ export default function Datepicker(
     }
 
     const getCalendar = () => (
-        <div className={darkMode ? "calendar-dark" : ""}>
+        <div key={key} className={darkMode ? "calendar-dark" : ""}>
             <Calendar
                 colorPrimary={colorPrimary}
                 colorPrimaryLight={colorPrimaryLight}
@@ -71,13 +77,70 @@ export default function Datepicker(
                 value={value}
                 {...props}
                 onChange={onChange}
+                renderFooter={() => (
+                    <Flex justify={"space-between"} gap={10} className={"options-wrapper"} wrap={"wrap"}>
+                        <Flex gap={0} wrap={"wrap"}>
+                            <Tooltip
+                                overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
+                                title={locale === "en" ? "Today" : "امروز"}
+                            >
+                                <Button
+                                    shape={"circle"} className={"options-button"} type={"text"}
+                                    onClick={() => {
+                                        onChange(getTodayBasedOnSelectionMode(locale, selectionMode))
+                                        setKey(key + 1)
+                                    }}
+                                >
+                                    <span className={"icon-button today-button"}/>
+                                </Button>
+                            </Tooltip>
+
+                            {defaultValue &&
+                                <Tooltip
+                                    overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
+                                    title={locale === "en" ? "Default" : "تاریخ پیشفرض"}
+                                >
+                                    <Button
+                                        shape={"circle"} className={"options-button"} type={"text"}
+                                        onClick={() => onChange(getInitialValue(selectionMode, defaultValue, delimiter))}
+                                    >
+                                        <span className={"icon-button default-day-button"}/>
+                                    </Button>
+                                </Tooltip>
+                            }
+                        </Flex>
+
+                        <Flex gap={10} wrap={"wrap"}>
+                            <Button
+                                className={"options-button"}
+                                onClick={() => onChange(getEmptyValueBasedOnSelectionMode(selectionMode))}
+                            >
+                                {locale === "en" ? "Erase" : "پاک کردن"}
+                            </Button>
+
+                            <Button
+                                type={"primary"} className={"options-button"}
+                                onClick={() => setOpen(false)}
+                            >
+                                {locale === "en" ? "Submit" : "تایید"}
+                            </Button>
+                        </Flex>
+                    </Flex>
+                )}
             />
         </div>
     )
 
     return (
         <ConfigProvider
-            theme={{algorithm: darkMode ? darkAlgorithm : defaultAlgorithm}}>
+            direction={locale === "fa" ? "rtl" : "ltr"}
+            theme={{
+                algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
+                token: {
+                    colorPrimary: colorPrimary,
+                }
+            }}
+        >
             {
                 alwaysOpen ? (
                     <>
@@ -85,10 +148,13 @@ export default function Datepicker(
                     </>
                 ) : (
                     <Popover
+                        open={open}
                         trigger={trigger}
                         placement={placement}
                         content={getCalendar()}
                         overlayInnerStyle={{padding: 0}}
+                        onOpenChange={(visible) => setOpen(visible)}
+                        destroyTooltipOnHide
                     >
                         {getClosedViewElement()}
                     </Popover>

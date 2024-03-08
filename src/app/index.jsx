@@ -6,11 +6,14 @@ export default function App(datepickerProps) {
         <div style={{backgroundColor: "orange"}}>
             <Datepicker
                 {...datepickerProps}
-                selectionMode={"range"}
-                closedView={"button"}
-                darkMode
+                selectionMode={"single"}
+                colorPrimary={"purple"}
+                // alwaysOpen
+                // closedView={"input"}
+                // darkMode
+                // locale={"fa"}
                 shouldHighlightWeekends
-                defaultValue={{from:"2022-01-01", to: "2022-01-05"}}
+                defaultValue={"2022-01-01"}
                 returnType={"string"}
                 onChange={(value) => console.log(value)}
             />
