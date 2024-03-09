@@ -1,4 +1,5 @@
 import {utils} from "@hassanmojab/react-modern-calendar-datepicker";
+import moment from "moment-jalaali";
 
 export const EMPTY_PLACEHOLDERS = ["انتخاب", "select"]
 
@@ -150,5 +151,60 @@ export const getInputPlaceHolder = (placeholder, locale, selectionMode, delimite
             return locale === "en" ? " from the calendar" : "از تقویم چندین تاریخ را انتخاب کنید"
         default:
             return locale === "en" ? `select or type in ${enDateFormat} format` : `تاریخ را به فرمت ${faDateFormat} وارد کنید یا از تقویم انتخاب کنید`
+    }
+}
+
+const parseDate = (date, delimiter) => {
+    let parsedDate;
+    if (typeof date === "string") {
+        let dateSplit = date.split(delimiter)
+        parsedDate = {
+            year: parseInt(dateSplit[0]),
+            month: parseInt(dateSplit[1]),
+            day: parseInt(dateSplit[2]),
+        }
+    } else {
+        parsedDate = date;
+    }
+    return parsedDate;
+}
+
+export const getMinMaxDate = (minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow) => {
+    let calculatedMinimumDate = null
+    let calculatedMaximumDate = null
+
+    if (minimumDate) {
+        calculatedMinimumDate = parseDate(minimumDate, delimiter)
+    }
+    if (maximumDate) {
+        calculatedMaximumDate = parseDate(maximumDate, delimiter)
+    }
+
+    if (minimumToday) {
+        calculatedMinimumDate = utils("fa").getToday();
+    }
+    if (maximumToday) {
+        calculatedMaximumDate = utils("fa").getToday();
+    }
+    if (minimumTomorrow) {
+        let tomorrowObject = moment().add(1, 'day');
+        calculatedMinimumDate = {
+            year: tomorrowObject.jYear(),
+            month: tomorrowObject.jMonth() + 1,
+            day: tomorrowObject.jDate(),
+        }
+    }
+    if (maximumTomorrow) {
+        let tomorrowObject = moment().add(1, 'day');
+        calculatedMaximumDate = {
+            year: tomorrowObject.jYear(),
+            month: tomorrowObject.jMonth() + 1,
+            day: tomorrowObject.jDate(),
+        }
+    }
+
+    return {
+        minimumDate: calculatedMinimumDate,
+        maximumDate: calculatedMaximumDate
     }
 }

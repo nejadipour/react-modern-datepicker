@@ -7,7 +7,7 @@ import {
     getPlaceholder,
     getInitialValue,
     selectedValueToString,
-    getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode
+    getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode, getMinMaxDate
 } from "./utils.js";
 import {DefaultValueButton, EraseButton, SubmitButton, TodayButton} from "./options.jsx";
 import DatepickerInput from "./Input.jsx";
@@ -61,6 +61,7 @@ export default function Datepicker(
                 locale={locale}
                 value={value}
                 {...props}
+                {...getMinMaxDate(minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow)}
                 onChange={onChange}
                 renderFooter={() => (
                     <>
