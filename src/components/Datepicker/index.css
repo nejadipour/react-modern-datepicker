@@ -10,7 +10,7 @@
     margin-bottom: 0;
 }
 
-.calendar-dark .Calendar{
+.calendar-dark .Calendar {
     --cl-color-black: #ffff;
     --cl-color-disabled: #5f6367;
     --cl-color-error: #ff0058;
@@ -77,7 +77,7 @@
     outline: 1px dashed rgba(255, 255, 255, 0.4);
 }
 
-.calendar-dark .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover{
+.calendar-dark .Calendar__day:not(.-blank):not(.-selectedStart):not(.-selectedEnd):not(.-selectedBetween):not(.-selected):hover {
     background: #ffffff14;
 }
 
@@ -154,4 +154,9 @@
 
 .calendar-dark .calendar-icon {
     background-image: url("assets/icons/white_calendar.svg");
+}
+
+.calendar-disabled .Calendar__day {
+    pointer-events: none;
+    color: #5f6367;
 }

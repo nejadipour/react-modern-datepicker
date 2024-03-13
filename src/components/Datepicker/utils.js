@@ -3,6 +3,17 @@ import moment from "moment-jalaali";
 
 export const EMPTY_PLACEHOLDERS = ["انتخاب", "select"]
 
+export const getCalendarClassName = (darkMode, disabled) => {
+    let className = ""
+    if (darkMode) {
+        className = `${className} calendar-dark`
+    }
+    if (disabled) {
+        className = `${className} calendar-disabled`
+    }
+    return className;
+}
+
 export const notSelectedCheck = (value) => {
     return value === null || (value.to === null || value.from === null) || Array.isArray(value) && value.length === 0
 }

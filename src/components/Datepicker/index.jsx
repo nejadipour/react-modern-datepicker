@@ -7,7 +7,7 @@ import {
     getPlaceholder,
     getInitialValue,
     selectedValueToString,
-    getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode, getMinMaxDate
+    getTodayBasedOnSelectionMode, getEmptyValueBasedOnSelectionMode, getMinMaxDate, getCalendarClassName
 } from "./utils.js";
 import {DefaultValueButton, EraseButton, SubmitButton, TodayButton} from "./options.jsx";
 import DatepickerInput from "./Input.jsx";
@@ -54,7 +54,7 @@ export default function Datepicker(
     }
 
     const getCalendar = () => (
-        <div key={key} className={darkMode ? "calendar-dark" : ""}>
+        <div key={key} className={getCalendarClassName(darkMode, disabled)}>
             <Calendar
                 colorPrimary={colorPrimary}
                 colorPrimaryLight={colorPrimaryLight}
@@ -73,6 +73,7 @@ export default function Datepicker(
                                         onChange(getTodayBasedOnSelectionMode(locale, selectionMode))
                                         setKey(key + 1)
                                     }}
+                                    disabled={disabled}
                                 />
 
                                 {defaultValue &&
@@ -82,6 +83,7 @@ export default function Datepicker(
                                             onChange(getInitialValue(selectionMode, defaultValue, delimiter))
                                             setKey(key + 1)
                                         }}
+                                        disabled={disabled}
                                     />
                                 }
                             </Flex>
@@ -93,11 +95,13 @@ export default function Datepicker(
                                         onChange(getEmptyValueBasedOnSelectionMode(selectionMode))
                                         setKey(key + 1)
                                     }}
+                                    disabled={disabled}
                                 />
 
                                 <SubmitButton
                                     title={locale === "en" ? "Submit" : "تایید"}
                                     onClick={() => setOpen(false)}
+                                    disabled={disabled}
                                 />
                             </Flex>
                         </Flex>
@@ -129,6 +133,7 @@ export default function Datepicker(
             <Typography.Link
                 className={closedViewClassName}
                 {...closedViewProps}
+                disabled={disabled}
             >
                 {placeholderText}
             </Typography.Link>
@@ -150,6 +155,7 @@ export default function Datepicker(
                         onChange={onChange}
                         setOpen={setOpen}
                         getPopover={getPopover}
+                        disabled={disabled}
                         {...closedViewProps}
                     />,
                     insidePopover: false
@@ -159,6 +165,7 @@ export default function Datepicker(
                     element: <Button
                         className={closedViewClassName}
                         {...closedViewProps}
+                        disabled={disabled}
                     >
                         {placeholderText}
                     </Button>,
@@ -182,7 +189,7 @@ export default function Datepicker(
                 }
             }}
         >
-            <div className={darkMode ? "calendar-dark" : ""}>
+            <div className={getCalendarClassName(darkMode, disabled)}>
                 {
                     alwaysOpen ? (
                         <>
