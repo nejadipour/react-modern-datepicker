@@ -1,11 +1,20 @@
 {
-  "name": "react-modern-datepicker",
+  "name": "@nejadipour/react-modern-datepicker",
   "version": "0.0.0",
-  "main": "src/main.jsx",
+  "description": "Modern datepicker for React with support of both gregorian and jalali calendar",
+  "author": {
+    "name": "Alireza Nejadipour",
+    "email": "nejadipour@gmail.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nejadipour/react-modern-datepicker"
+  },
+  "main": "dist/main.jsx",
   "files": [
-    "src"
+    "dist"
   ],
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
