@@ -1,6 +1,6 @@
 {
   "name": "@nejadipour/react-modern-datepicker",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Modern datepicker for React with support of both gregorian and jalali calendar",
   "author": {
     "name": "Alireza Nejadipour",
@@ -11,7 +11,15 @@
     "type": "git",
     "url": "https://github.com/nejadipour/react-modern-datepicker"
   },
-  "main": "dist/main.jsx",
+  "main": "dist/react-modern-datepicker.umd.js",
+  "module": "dist/react-modern-datepicker.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/react-modern-datepicker.es.js",
+      "require": "./dist/react-modern-datepicker.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "files": [
     "dist"
   ],
@@ -21,13 +29,16 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "dependencies": {
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@persian-tools/persian-tools": "^3.5.2",
-    "antd": "^5.15.0",
+    "antd": "^5.15.2",
     "moment-jalaali": "^0.10.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
@@ -37,6 +48,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.1.4"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "vite": "^5.1.6",
+    "vite-plugin-libcss": "^1.1.1"
   }
 }

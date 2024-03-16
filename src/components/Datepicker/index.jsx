@@ -1,6 +1,6 @@
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import "./index.css";
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Calendar} from "@hassanmojab/react-modern-calendar-datepicker";
 import {Button, ConfigProvider, Flex, Popover, theme, Typography} from "antd";
 import {
@@ -11,6 +11,7 @@ import {
 } from "./utils.js";
 import {DefaultValueButton, EraseButton, SubmitButton, TodayButton} from "./options.jsx";
 import DatepickerInput from "./Input.jsx";
+import PropTypes from 'prop-types';
 
 
 export default function Datepicker(
@@ -50,7 +51,7 @@ export default function Datepicker(
         if (calendarValue && returnType === "string") {
             returnValue = selectedValueToString(returnValue, delimiter)
         }
-        props.onChange(returnValue)
+        if (props.onChange) props.onChange(returnValue)
     }
 
     const getCalendar = () => (
@@ -206,4 +207,31 @@ export default function Datepicker(
             </div>
         </ConfigProvider>
     )
+}
+
+Datepicker.propTypes = {
+    alwaysOpen: PropTypes.bool,
+    closedView: PropTypes.oneOf(["text", "input", "button"]),
+    closedViewClassName: PropTypes.string,
+    closedViewProps: PropTypes.object,
+    colorPrimary: PropTypes.string,
+    colorPrimaryLight: PropTypes.string,
+    darkMode: PropTypes.bool,
+    delimiter: PropTypes.string,
+    defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+    disabled: PropTypes.bool,
+    locale: PropTypes.oneOf(["en", "fa"]),
+    maximumDate: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    maximumToday: PropTypes.bool,
+    maximumTomorrow: PropTypes.bool,
+    minimumDate: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    minimumToday: PropTypes.bool,
+    minimumTomorrow: PropTypes.bool,
+    placeholder: PropTypes.string,
+    placement: PropTypes.oneOf(['top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']),
+    returnType: PropTypes.oneOf(["string", "object"]),
+    selectionMode: PropTypes.oneOf(["single", "range", "multiple"]),
+    trigger: PropTypes.oneOf(["click", "hover"]),
+    onChange: PropTypes.func,
+    renderFooter: PropTypes.func
 }

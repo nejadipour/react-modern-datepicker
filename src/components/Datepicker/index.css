@@ -2,6 +2,14 @@
     bottom: 5%;
 }
 
+.Calendar__yearText, .Calendar__monthText {
+    color: #000;
+}
+
+.Calendar__yearSelectorText, .Calendar__monthSelectorItemText {
+    color: #000;
+}
+
 .calendar-dark .DatePicker__calendarArrow {
     border-color: #ffffff;
 }
@@ -110,7 +118,7 @@
 }
 
 .calendar-dark .Calendar__monthArrow {
-    background-image: url("src/assets/icons/white_arrow.svg");
+    background-image: url("../../assets/icons/white_arrow.svg");
 }
 
 .options-wrapper {
@@ -130,30 +138,30 @@
 }
 
 .today-button {
-    background-image: url("src/assets/icons/today.svg");
+    background-image: url("../../assets/icons/today.svg");
 }
 
 .default-day-button {
-    background-image: url("src/assets/icons/default.svg");
+    background-image: url("../../assets/icons/default.svg");
 }
 
 .calendar-dark .today-button {
-    background-image: url("src/assets/icons/white_today.svg");
+    background-image: url("../../assets/icons/white_today.svg");
 }
 
 .calendar-dark .default-day-button {
-    background-image: url("src/assets/icons/white_default.svg");
+    background-image: url("../../assets/icons/white_default.svg");
 }
 
 .calendar-icon {
     height: 1.2em;
     width: 1.2em;
     margin-top: 2px;
-    background-image: url("src/assets/icons/calendar.svg");
+    background-image: url("../../assets/icons/calendar.svg");
 }
 
 .calendar-dark .calendar-icon {
-    background-image: url("src/assets/icons/white_calendar.svg");
+    background-image: url("../../assets/icons/white_calendar.svg");
 }
 
 .calendar-disabled .Calendar__day {
