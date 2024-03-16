@@ -5,6 +5,10 @@ This package is an updated version
 of [react-modern-calendar-datepicker](https://www.npmjs.com/package/react-modern-calendar-datepicker) with some
 additional features and bug fixes.
 
+<div style="text-align: center;">
+<img src="img.png" alt="Logo" width="80%">
+</div>
+
 ## Installation
 
 ```bash
