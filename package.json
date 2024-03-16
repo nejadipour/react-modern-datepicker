@@ -1,6 +1,6 @@
 {
   "name": "@nejadipour/react-modern-datepicker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Modern datepicker for React with support of both gregorian and jalali calendar",
   "author": {
     "name": "Alireza Nejadipour",
