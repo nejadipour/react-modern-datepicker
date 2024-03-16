@@ -14,6 +14,13 @@ npm install @nejadipour/react-modern-datepicker
 ## Usage
 
 ```jsx
+import Datepicker from "@nejadipour/react-modern-datepicker";
+
+export default function Usage() {
+    return (
+        <Datepicker darkMode locale={"fa"}/>
+    )
+}
 ```
 
 ## Documentation
