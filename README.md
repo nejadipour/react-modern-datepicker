@@ -6,7 +6,7 @@ of [react-modern-calendar-datepicker](https://www.npmjs.com/package/react-modern
 additional features and bug fixes.
 
 <div style="text-align: center;">
-<img src="img.png" alt="Logo" width="80%">
+<img src="img.png" alt="Logo">
 </div>
 
 ## Installation
@@ -62,8 +62,10 @@ Some additional features are added to the original package, you can find the pro
 | minimumTomorrow               | Boolean  | False                                   | If True, the minimum date will be set to tomorrow                                                                                                                                                                 |
 | onChange                      | Function | newValue => null                        | Gets called when the value of the picker changes                                                                                                                                                                  |
 | onDisabledDayError            | Function | disabledDay => null                     | Gets called when user tries to select/include a disabled day                                                                                                                                                      |
+| onRenderReady                 | Function | () => null                              | Gets called when the date picker render is ready or changed                                                                                                                                                       |
 | placeholder                   | String   | 'select' for 'en' and 'انتخاب' for 'fa' | The placeholder of the date picker                                                                                                                                                                                |
 | placement                     | String   | 'bottom'                                | The placement of the date picker. It can be one of 'top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop' or 'rightBottom'                     |
+| popover                       | Boolean  | true                                    | If true, the date picker will be open in a popover, else it will be replaced with the closed view                                                                                                                 |
 | renderFooter                  | Function | () => null                              | Renders a footer for the calendar below the days list. You can use this prop to render a "Go to Today" button or anything you'd like to add there.                                                                |
 | returnType                    | String   | 'string'                                | The type of the when calling onChange. It can be one of 'string' or 'object'                                                                                                                                      |
 | selectionMode                 | String   | 'single'                                | The selection mode of the date picker. It can be one of 'single', 'range', or 'multiple'                                                                                                                          |

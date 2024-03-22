@@ -33,8 +33,10 @@ export default function Datepicker(
         minimumDate = null,
         minimumToday = false,
         minimumTomorrow = false,
+        onRenderReady,
         placeholder = locale === "en" ? "select" : "انتخاب",
         placement = "bottom",
+        popover = true,
         returnType = "object",
         selectionMode = "single",
         trigger = "click",
@@ -44,6 +46,7 @@ export default function Datepicker(
     const [value, setValue] = useState(getInitialValue(selectionMode, defaultValue, delimiter));
     const [open, setOpen] = useState(false);
     const [key, setKey] = useState(0);
+    const [calendarReplaced, setCalendarReplaced] = useState(false);
 
     const onChange = (calendarValue) => {
         setValue(calendarValue);
@@ -62,7 +65,7 @@ export default function Datepicker(
                 locale={locale}
                 value={value}
                 {...props}
-                {...getMinMaxDate(minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow)}
+                {...getMinMaxDate(locale, minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow)}
                 onChange={onChange}
                 renderFooter={() => (
                     <>
@@ -101,7 +104,11 @@ export default function Datepicker(
 
                                 <SubmitButton
                                     title={locale === "en" ? "Submit" : "تایید"}
-                                    onClick={() => setOpen(false)}
+                                    onClick={() => {
+                                        setOpen(false)
+                                        setCalendarReplaced(false)
+                                        if (onRenderReady) onRenderReady()
+                                    }}
                                     disabled={disabled}
                                 />
                             </Flex>
@@ -180,6 +187,80 @@ export default function Datepicker(
         }
     }
 
+    const getClosedViewWithNoPopover = () => {
+        let onClick = () => {
+            setCalendarReplaced(true);
+            if (onRenderReady) onRenderReady();
+        }
+        let placeholderText = getPlaceholder(value, locale, placeholder, delimiter)
+        let textClosedView =
+            <Typography.Link
+                className={closedViewClassName}
+                {...closedViewProps}
+                disabled={disabled}
+                onClick={onClick}
+            >
+                {placeholderText}
+            </Typography.Link>
+
+        switch (closedView) {
+            case "text":
+                return textClosedView
+            case "input":
+                return <DatepickerInput
+                    className={closedViewClassName}
+                    placeholder={placeholderText}
+                    delimiter={delimiter}
+                    selectionMode={selectionMode}
+                    locale={locale}
+                    onChange={onChange}
+                    setOpen={setOpen}
+                    getPopover={getPopover}
+                    disabled={disabled}
+                    popover={popover}
+                    getCalendar={getCalendar}
+                    calendarReplaced={calendarReplaced}
+                    setCalendarReplaced={setCalendarReplaced}
+                    onClick={onClick}
+                    {...closedViewProps}
+                />
+            case "button":
+                return <Button
+                    className={closedViewClassName}
+                    {...closedViewProps}
+                    disabled={disabled}
+                    onClick={onClick}
+                >
+                    {placeholderText}
+                </Button>
+            default:
+                return textClosedView
+        }
+    }
+
+    const getElementToRender = () => {
+        let elementToRender;
+
+        if (alwaysOpen) {
+            elementToRender = getCalendar();
+        } else if (!popover) {
+            if (calendarReplaced) {
+                elementToRender = getCalendar();
+            } else {
+                elementToRender = getClosedViewWithNoPopover();
+            }
+        } else {
+            const closedViewElement = getClosedViewElement();
+            if (closedViewElement.insidePopover) {
+                elementToRender = getPopover(closedViewElement.element);
+            } else {
+                elementToRender = closedViewElement.element;
+            }
+        }
+
+        return elementToRender;
+    }
+
     return (
         <ConfigProvider
             direction={locale === "fa" ? "rtl" : "ltr"}
@@ -191,19 +272,7 @@ export default function Datepicker(
             }}
         >
             <div className={getCalendarClassName(darkMode, disabled)}>
-                {
-                    alwaysOpen ? (
-                        <>
-                            {getCalendar()}
-                        </>
-                    ) : (
-                        getClosedViewElement().insidePopover ? (
-                            getPopover(getClosedViewElement().element)
-                        ) : (
-                            getClosedViewElement().element
-                        )
-                    )
-                }
+                {getElementToRender()}
             </div>
         </ConfigProvider>
     )
@@ -227,8 +296,10 @@ Datepicker.propTypes = {
     minimumDate: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     minimumToday: PropTypes.bool,
     minimumTomorrow: PropTypes.bool,
+    onRenderReady: PropTypes.func,
     placeholder: PropTypes.string,
     placement: PropTypes.oneOf(['top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']),
+    popover: PropTypes.bool,
     returnType: PropTypes.oneOf(["string", "object"]),
     selectionMode: PropTypes.oneOf(["single", "range", "multiple"]),
     trigger: PropTypes.oneOf(["click", "hover"]),

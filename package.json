@@ -1,6 +1,6 @@
 {
   "name": "@nejadipour/react-modern-datepicker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Modern datepicker for React with support of both gregorian and jalali calendar",
   "author": {
     "name": "Alireza Nejadipour",
@@ -41,9 +41,10 @@
   "dependencies": {
     "@hassanmojab/react-modern-calendar-datepicker": "^3.1.7",
     "@persian-tools/persian-tools": "^3.5.2",
-    "antd": "^5.15.2",
+    "antd": "^5.15.3",
     "moment-jalaali": "^0.10.0",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "streamlit-component-lib": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

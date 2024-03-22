@@ -180,7 +180,7 @@ const parseDate = (date, delimiter) => {
     return parsedDate;
 }
 
-export const getMinMaxDate = (minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow) => {
+export const getMinMaxDate = (locale, minimumDate, maximumDate, delimiter, maximumToday, maximumTomorrow, minimumToday, minimumTomorrow) => {
     let calculatedMinimumDate = null
     let calculatedMaximumDate = null
 
@@ -192,25 +192,23 @@ export const getMinMaxDate = (minimumDate, maximumDate, delimiter, maximumToday,
     }
 
     if (minimumToday) {
-        calculatedMinimumDate = utils("fa").getToday();
+        calculatedMinimumDate = utils(locale).getToday();
     }
     if (maximumToday) {
-        calculatedMaximumDate = utils("fa").getToday();
+        calculatedMaximumDate = utils(locale).getToday();
     }
-    if (minimumTomorrow) {
+    if (minimumTomorrow || maximumTomorrow) {
         let tomorrowObject = moment().add(1, 'day');
-        calculatedMinimumDate = {
-            year: tomorrowObject.jYear(),
-            month: tomorrowObject.jMonth() + 1,
-            day: tomorrowObject.jDate(),
+        let tomorrowDate = {
+            year: locale === "en" ? tomorrowObject.year() : tomorrowObject.jYear(),
+            month: locale === "en" ? tomorrowObject.month() + 1 : tomorrowObject.jMonth() + 1,
+            day: locale === "en" ? tomorrowObject.date() : tomorrowObject.jDate(),
         }
-    }
-    if (maximumTomorrow) {
-        let tomorrowObject = moment().add(1, 'day');
-        calculatedMaximumDate = {
-            year: tomorrowObject.jYear(),
-            month: tomorrowObject.jMonth() + 1,
-            day: tomorrowObject.jDate(),
+        if (minimumTomorrow) {
+            calculatedMinimumDate = tomorrowDate;
+        }
+        if (maximumTomorrow) {
+            calculatedMaximumDate = tomorrowDate;
         }
     }
 
