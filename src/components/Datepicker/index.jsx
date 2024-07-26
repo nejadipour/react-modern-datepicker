@@ -37,8 +37,11 @@ export default function Datepicker(
         placeholder = locale === "en" ? "select" : "انتخاب",
         placement = "bottom",
         popover = true,
+        renderInput = null,
         returnType = "object",
         selectionMode = "single",
+        showIcon = true,
+        tooltipProps,
         trigger = "click",
         ...props
     }) {
@@ -73,6 +76,7 @@ export default function Datepicker(
                             <Flex gap={0} wrap={"wrap"}>
                                 <TodayButton
                                     title={locale === "en" ? "Today" : "امروز"}
+                                    tooltipProps={tooltipProps}
                                     onClick={() => {
                                         onChange(getTodayBasedOnSelectionMode(locale, selectionMode))
                                         setKey(key + 1)
@@ -83,6 +87,7 @@ export default function Datepicker(
                                 {defaultValue &&
                                     <DefaultValueButton
                                         title={locale === "en" ? "Default" : "تاریخ پیشفرض"}
+                                        tooltipProps={tooltipProps}
                                         onClick={() => {
                                             onChange(getInitialValue(selectionMode, defaultValue, delimiter))
                                             setKey(key + 1)
@@ -155,6 +160,8 @@ export default function Datepicker(
             case "input":
                 return {
                     element: <DatepickerInput
+                        renderInput={renderInput}
+                        showIcon={showIcon}
                         className={closedViewClassName}
                         placeholder={placeholderText}
                         delimiter={delimiter}
@@ -164,6 +171,7 @@ export default function Datepicker(
                         setOpen={setOpen}
                         getPopover={getPopover}
                         disabled={disabled}
+                        popover={popover}
                         {...closedViewProps}
                     />,
                     insidePopover: false
@@ -208,6 +216,8 @@ export default function Datepicker(
                 return textClosedView
             case "input":
                 return <DatepickerInput
+                    renderInput={renderInput}
+                    showIcon={showIcon}
                     className={closedViewClassName}
                     placeholder={placeholderText}
                     delimiter={delimiter}
@@ -300,8 +310,11 @@ Datepicker.propTypes = {
     placeholder: PropTypes.string,
     placement: PropTypes.oneOf(['top', 'bottom', 'left', 'right', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']),
     popover: PropTypes.bool,
+    renderInput: PropTypes.oneOf([null, PropTypes.func]),
     returnType: PropTypes.oneOf(["string", "object"]),
     selectionMode: PropTypes.oneOf(["single", "range", "multiple"]),
+    showIcon: PropTypes.bool,
+    tooltipProps: PropTypes.object,
     trigger: PropTypes.oneOf(["click", "hover"]),
     onChange: PropTypes.func,
     renderFooter: PropTypes.func

@@ -17,6 +17,8 @@ export default function DatepickerInput(
         calendarReplaced,
         setCalendarReplaced,
         onClick,
+        renderInput,
+        showIcon,
         ...props
     }) {
     const [inputValue, setInputValue] = useState(EMPTY_PLACEHOLDERS.includes(placeholder) ? null : placeholder);
@@ -65,23 +67,34 @@ export default function DatepickerInput(
         </Button>
     )
 
+    const inputProps = {
+        placeholder: getInputPlaceHolder(placeholder, locale, selectionMode, delimiter),
+        value: inputValue,
+        onChange: changeHandler,
+        ...props
+    }
+
+    const InputElement = (
+        renderInput ? renderInput(inputProps) : <Input {...inputProps}/>
+    )
+
     return (
         <>
             {calendarReplaced ? getCalendar() :
                 <Space.Compact>
-                    {!popover ? getButtonWithNoPopover() :
-                        getPopover(
-                            <Button>
-                                <span className={"icon-button calendar-icon"}/>
-                            </Button>
-                        )
+                    {showIcon ?
+                        <>
+                            {!popover ? getButtonWithNoPopover() :
+                                getPopover(
+                                    <Button>
+                                        <span className={"icon-button calendar-icon"}/>
+                                    </Button>
+                                )
+                            }
+                            <InputElement/>
+                        </> :
+                        getPopover(InputElement)
                     }
-                    <Input
-                        placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
-                        value={inputValue}
-                        onChange={changeHandler}
-                        {...props}
-                    />
                 </Space.Compact>
             }
         </>

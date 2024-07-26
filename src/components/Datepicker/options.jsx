@@ -1,8 +1,11 @@
 import {Button, Tooltip} from "antd";
 
-export const TodayButton = ({title, ...props}) => (
+export const TodayButton = ({title, tooltipProps, ...props}) => (
     <Tooltip
-        overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
+        overlayStyle={{fontSize: 12}}
+        arrow={false}
+        placement={"bottom"}
+        {...tooltipProps}
         title={title}
     >
         <Button
@@ -14,9 +17,12 @@ export const TodayButton = ({title, ...props}) => (
     </Tooltip>
 )
 
-export const DefaultValueButton = ({title, ...props}) => (
+export const DefaultValueButton = ({title, tooltipProps, ...props}) => (
     <Tooltip
-        overlayStyle={{fontSize: 12}} arrow={false} placement={"bottom"}
+        overlayStyle={{fontSize: 12}}
+        arrow={false}
+        placement={"bottom"}
+        {...tooltipProps}
         title={title}
     >
         <Button
