@@ -1,7 +1,13 @@
 import {Input, Button, Space} from "antd";
 import {getInputPlaceHolder, selectedValueToString} from "./utils.js";
 import {digitsFaToEn} from "@persian-tools/persian-tools";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
+
+const InputElement = React.memo((props) => (
+    props.renderInput ?
+        props.renderInput(props) :
+        <Input {...props}/>
+));
 
 export default function DatepickerInput(
     {
@@ -19,8 +25,7 @@ export default function DatepickerInput(
         onClick,
         value,
         renderInput,
-        showIcon,
-        ...props
+        showIcon
     }) {
     const [inputValue, setInputValue] = useState(null);
 
@@ -36,7 +41,7 @@ export default function DatepickerInput(
                 let month = splitValue[1];
                 let day = splitValue[2];
 
-                if (year.length === 4 && (1 <= month.length <= 2) && (1 <= day.length <= 2)) {
+                if (year.length === 4 && (month.length >= 1 && month.length <= 2) && (day.length >= 1 && day.length <= 2)) {
                     year = digitsFaToEn(year);
                     month = digitsFaToEn(month);
                     day = digitsFaToEn(day);
@@ -87,14 +92,16 @@ export default function DatepickerInput(
                                     </Button>
                                 )
                             }
-                            <Input
+                            <InputElement
+                                renderInput={renderInput}
                                 placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
                                 value={inputValue}
                                 onChange={changeHandler}
                             />
                         </> :
                         getPopover(
-                            <Input
+                            <InputElement
+                                renderInput={renderInput}
                                 placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
                                 value={inputValue}
                                 onChange={changeHandler}
