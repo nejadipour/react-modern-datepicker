@@ -1,5 +1,5 @@
 import {Input, Button, Space} from "antd";
-import {EMPTY_PLACEHOLDERS, getInputPlaceHolder} from "./utils.js";
+import {getInputPlaceHolder, selectedValueToString} from "./utils.js";
 import {digitsFaToEn} from "@persian-tools/persian-tools";
 import {useEffect, useState} from "react";
 
@@ -17,11 +17,12 @@ export default function DatepickerInput(
         calendarReplaced,
         setCalendarReplaced,
         onClick,
+        value,
         renderInput,
         showIcon,
         ...props
     }) {
-    const [inputValue, setInputValue] = useState(EMPTY_PLACEHOLDERS.includes(placeholder) ? null : placeholder);
+    const [inputValue, setInputValue] = useState(null);
 
     const changeHandler = (e) => {
         if (selectionMode !== "single") {
@@ -58,24 +59,19 @@ export default function DatepickerInput(
     }
 
     useEffect(() => {
-        setInputValue(EMPTY_PLACEHOLDERS.includes(placeholder) ? null : placeholder);
-    }, [placeholder])
+        let strValue = value;
+        if (typeof value === "object") {
+            strValue = selectedValueToString(value, delimiter);
+        }
+        if (strValue !== inputValue) {
+            setInputValue(strValue);
+        }
+    }, [value])
 
     const getButtonWithNoPopover = () => (
         <Button onClick={onClick}>
             <span className={"icon-button calendar-icon"}/>
         </Button>
-    )
-
-    const inputProps = {
-        placeholder: getInputPlaceHolder(placeholder, locale, selectionMode, delimiter),
-        value: inputValue,
-        onChange: changeHandler,
-        ...props
-    }
-
-    const InputElement = (
-        renderInput ? renderInput(inputProps) : <Input {...inputProps}/>
     )
 
     return (
@@ -91,9 +87,19 @@ export default function DatepickerInput(
                                     </Button>
                                 )
                             }
-                            <InputElement/>
+                            <Input
+                                placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
+                                value={inputValue}
+                                onChange={changeHandler}
+                            />
                         </> :
-                        getPopover(InputElement)
+                        getPopover(
+                            <Input
+                                placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
+                                value={inputValue}
+                                onChange={changeHandler}
+                            />
+                        )
                     }
                 </Space.Compact>
             }

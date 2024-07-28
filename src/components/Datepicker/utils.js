@@ -37,7 +37,7 @@ const getDayObject = (day, delimiter) => {
 }
 
 export const dayValueToString = (day, delimiter) => {
-    return day ? `${day.year}${delimiter}${day.month}${delimiter}${day.day}` : ""
+    return day ? `${day.year}${delimiter}${day.month < 10 ? `0${day.month}` : day.month}${delimiter}${day.day < 10 ? `0${day.day}` : day.day}` : ""
 }
 
 export const stringToDayValue = (string, delimiter) => {
@@ -94,7 +94,7 @@ export const selectedValueToString = (value, delimiter) => {
     if (Array.isArray(value)) {
         return value.map((day) => dayValueToString(day, delimiter))
     }
-    if (Object.keys(value).includes("from") && Object.keys(value).includes("to")) {
+    if (value && Object.keys(value)?.includes("from") && Object.keys(value).includes("to")) {
         return {
             from: dayValueToString(value.from, delimiter),
             to: dayValueToString(value.to, delimiter)

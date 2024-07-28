@@ -1,6 +1,6 @@
 import '@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css';
 import "./index.css";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Calendar} from "@hassanmojab/react-modern-calendar-datepicker";
 import {Button, ConfigProvider, Flex, Popover, theme, Typography} from "antd";
 import {
@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 export default function Datepicker(
     {
         alwaysOpen = false,
+        arrow = true,
         closedView = "text",
         closedViewClassName = "",
         closedViewProps,
@@ -43,10 +44,11 @@ export default function Datepicker(
         showIcon = true,
         tooltipProps,
         trigger = "click",
+        value: passedValue = null,
         ...props
     }) {
     const {defaultAlgorithm, darkAlgorithm} = theme;
-    const [value, setValue] = useState(getInitialValue(selectionMode, defaultValue, delimiter));
+    const [value, setValue] = useState(getInitialValue(selectionMode, passedValue || defaultValue, delimiter));
     const [open, setOpen] = useState(false);
     const [key, setKey] = useState(0);
     const [calendarReplaced, setCalendarReplaced] = useState(false);
@@ -59,6 +61,12 @@ export default function Datepicker(
         }
         if (props.onChange) props.onChange(returnValue)
     }
+
+    useEffect(() => {
+        const newValue = getInitialValue(selectionMode, passedValue, delimiter);
+        if (newValue !== value)
+            setValue(newValue);
+    }, [passedValue]);
 
     const getCalendar = () => (
         <div key={key} className={getCalendarClassName(darkMode, disabled)}>
@@ -128,6 +136,7 @@ export default function Datepicker(
 
     const getPopover = (children) => (
         <Popover
+            arrow={arrow}
             open={open}
             trigger={trigger}
             placement={placement}
@@ -172,6 +181,7 @@ export default function Datepicker(
                         getPopover={getPopover}
                         disabled={disabled}
                         popover={popover}
+                        value={value}
                         {...closedViewProps}
                     />,
                     insidePopover: false
@@ -290,6 +300,7 @@ export default function Datepicker(
 
 Datepicker.propTypes = {
     alwaysOpen: PropTypes.bool,
+    arrow: PropTypes.bool,
     closedView: PropTypes.oneOf(["text", "input", "button"]),
     closedViewClassName: PropTypes.string,
     closedViewProps: PropTypes.object,

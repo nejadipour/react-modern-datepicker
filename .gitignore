@@ -27,3 +27,4 @@ dist-ssr
 .pnp.cjs
 .pnp.loader.mjs
 yarn.lock
+src/main.jsx
