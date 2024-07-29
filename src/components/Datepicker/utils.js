@@ -1,8 +1,6 @@
 import {utils} from "@hassanmojab/react-modern-calendar-datepicker";
 import moment from "moment-jalaali";
 
-export const EMPTY_PLACEHOLDERS = ["انتخاب", "select"]
-
 export const getCalendarClassName = (darkMode, disabled) => {
     let className = ""
     if (darkMode) {
@@ -149,7 +147,7 @@ export const getInputPlaceHolder = (placeholder, locale, selectionMode, delimite
     let enDateFormat = `YYYY${delimiter}MM${delimiter}DD`
     let faDateFormat = `سال${delimiter}ماه${delimiter}روز`
 
-    if (!EMPTY_PLACEHOLDERS.includes(placeholder)) {
+    if (placeholder) {
         return placeholder;
     }
 

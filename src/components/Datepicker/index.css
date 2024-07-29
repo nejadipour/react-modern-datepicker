@@ -1,3 +1,133 @@
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Thin.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Thin.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Thin.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Thin.otf') format('opentype');
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-UltraLight.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-UltraLight.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-UltraLight.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-UltraLight.otf') format('opentype');
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Light.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Light.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Light.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Light.otf') format('opentype');
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Regular.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Regular.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Regular.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Regular.otf') format('opentype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Medium.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Medium.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Medium.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Medium.otf') format('opentype');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-DemiBold.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-DemiBold.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-DemiBold.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-DemiBold.otf') format('opentype');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Bold.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Bold.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Bold.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Bold.otf') format('opentype');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-ExtraBold.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-ExtraBold.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-ExtraBold.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-ExtraBold.otf') format('opentype');
+    font-weight: 800;
+}
+
+@font-face {
+    font-family: 'IranSansX';
+    src:
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Black.woff2') format('woff2'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Black.woff') format('woff'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Black.ttf') format('truetype'),
+            local('IranSansX'),
+            url('../../assets/fonts/IranSansX/IRANSansX-Black.otf') format('opentype');
+    font-weight: 900;
+}
+
+.root {
+    font-family: IranSansX;
+}
+
 .Calendar__monthSelectorAnimationWrapper, .Calendar__yearSelectorAnimationWrapper {
     bottom: 5%;
 }

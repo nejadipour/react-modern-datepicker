@@ -25,7 +25,8 @@ export default function DatepickerInput(
         onClick,
         value,
         renderInput,
-        showIcon
+        showIcon,
+        ...props
     }) {
     const [inputValue, setInputValue] = useState(null);
 
@@ -41,7 +42,7 @@ export default function DatepickerInput(
                 let month = splitValue[1];
                 let day = splitValue[2];
 
-                if (year.length === 4 && (month.length >= 1 && month.length <= 2) && (day.length >= 1 && day.length <= 2)) {
+                if (year.length === 4 && month.length === 2 && day.length === 2) {
                     year = digitsFaToEn(year);
                     month = digitsFaToEn(month);
                     day = digitsFaToEn(day);
@@ -97,6 +98,7 @@ export default function DatepickerInput(
                                 placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
                                 value={inputValue}
                                 onChange={changeHandler}
+                                {...props}
                             />
                         </> :
                         getPopover(
@@ -105,6 +107,7 @@ export default function DatepickerInput(
                                 placeholder={getInputPlaceHolder(placeholder, locale, selectionMode, delimiter)}
                                 value={inputValue}
                                 onChange={changeHandler}
+                                {...props}
                             />
                         )
                     }

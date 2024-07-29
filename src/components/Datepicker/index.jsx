@@ -282,19 +282,22 @@ export default function Datepicker(
     }
 
     return (
-        <ConfigProvider
-            direction={locale === "fa" ? "rtl" : "ltr"}
-            theme={{
-                algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
-                token: {
-                    colorPrimary: colorPrimary,
-                }
-            }}
-        >
-            <div className={getCalendarClassName(darkMode, disabled)}>
-                {getElementToRender()}
-            </div>
-        </ConfigProvider>
+        <div className={'root'}>
+            <ConfigProvider
+                direction={locale === "fa" ? "rtl" : "ltr"}
+                theme={{
+                    algorithm: darkMode ? darkAlgorithm : defaultAlgorithm,
+                    token: {
+                        colorPrimary: colorPrimary,
+                        fontFamily: "IranSansX"
+                    }
+                }}
+            >
+                <div className={getCalendarClassName(darkMode, disabled)}>
+                    {getElementToRender()}
+                </div>
+            </ConfigProvider>
+        </div>
     )
 }
 
